@@ -1,0 +1,2 @@
+rootProject.name = "ArgoMobile"
+include ':app'
