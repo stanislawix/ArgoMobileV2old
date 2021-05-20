@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ArgoMobile</string>
+    <string name="save">Save</string>
+    <string name="my_string">horse</string>
 </resources>
