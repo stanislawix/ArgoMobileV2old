@@ -1,14 +1,14 @@
 package pl.argo.argomobile;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.TextView;
 
-public class SettingsActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SettingsActivityCopy extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
