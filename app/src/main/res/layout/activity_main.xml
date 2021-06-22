@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
 
-    <EditText
+    <!--<EditText
         android:id="@+id/inputText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,13 +40,12 @@
         android:id="@+id/imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="364dp"
         android:onClick="switchActivities"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.106"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toEndOf="@+id/button"
         app:srcCompat="@drawable/ic_baseline_settings_24" />
 
     <Button
@@ -66,16 +65,19 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
         android:onClick="switchActivities"
         android:text="Settings"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.468" />
+        app:layout_constraintVertical_bias="0.472" />-->
 
-    <io.github.controlwear.virtual.joystick.android.JoystickView
+
+
+
+
+    <!--<io.github.controlwear.virtual.joystick.android.JoystickView
         android:id="@+id/joystickView2"
         android:layout_width="174dp"
         android:layout_height="187dp"
@@ -89,7 +91,24 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.542"
-        app:layout_constraintStart_toEndOf="@+id/joystickView3" />
+        app:layout_constraintStart_toEndOf="@+id/joystickView3" />-->
+
+
+    <io.github.controlwear.virtual.joystick.android.JoystickView
+        android:id="@+id/joystickView2"
+        android:layout_width="247dp"
+        android:layout_height="215dp"
+        app:JV_backgroundColor="#009688"
+        app:JV_borderColor="#00796B"
+        app:JV_borderWidth="4dp"
+        app:JV_buttonColor="#FF6E40"
+        app:JV_buttonSizeRatio="50%"
+        app:JV_fixedCenter="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.162" />
 
     <io.github.controlwear.virtual.joystick.android.JoystickView
         android:id="@+id/joystickView3"
@@ -105,6 +124,38 @@
         app:JV_fixedCenter="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <!--<Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="goToControlActivity"
+        android:text="To the controll activity"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.581" />-->
+
+    <org.ros.android.view.RosTextView
+        android:id="@+id/text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.079" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

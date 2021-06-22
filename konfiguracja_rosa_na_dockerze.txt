@@ -1,0 +1,22 @@
+Pobranie obrazu ros:melodic na dockerze:
+docker pull ros:melodic
+
+Ustawienie zmiennych środowiskowych:
+- jednorazowo:
+source /opt/ros/melodic/setup.bash
+
+- na stałe:
+echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+
+Przydatne komendy do obsługi:
+
+- master:
+docker run -it --name master ros:melodic
+roscore
+
+- node'y:
+docker exec -it [id] bash
+rostopic pub /test std_msgs/String "data: '123'" -r 1
+rostopic echo /test
+

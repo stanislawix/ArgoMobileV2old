@@ -1,5 +1,6 @@
 package pl.argo.argomobile
 
+/*
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -20,4 +21,4 @@ class SettingsActivity : AppCompatActivity() {
         inflater.inflate(R.menu.example_menu, menu)
         return true
     }
-}
+}*/

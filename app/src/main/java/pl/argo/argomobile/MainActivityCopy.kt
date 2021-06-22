@@ -1,5 +1,8 @@
 package pl.argo.argomobile
 
+
+/*
+
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -23,9 +26,11 @@ class MainActivity : AppCompatActivity() {
         //Log.d("fail", "not working");
 
 
-        /**
+        */
+/**
          * https://github.com/controlwear/virtual-joystick-android
-         */
+         *//*
+
         //var joystick : JoystickView = findViewById()
     }
 
@@ -56,6 +61,11 @@ class MainActivity : AppCompatActivity() {
         val i = Intent(this, SettingsActivity::class.java)
         //i.putExtra("nice_d", "bruh");
         i.putExtra("nice_d", (findViewById<View>(R.id.outputText) as TextView).text)
+        startActivity(i)
+    }
+
+    fun goToControlActivity(v: View) {
+        val i = Intent(this, RoverControlActivity::class.java)
         startActivity(i)
     }
 
@@ -92,4 +102,4 @@ class MainActivity : AppCompatActivity() {
         inflater.inflate(R.menu.example_menu, menu)
         return true
     }
-}
+}*/
