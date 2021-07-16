@@ -1,0 +1,48 @@
+prędkości liniowe w m/s (maks. łazik jedzie 1 m/s)
+kątowe w rad/s
+
+ustawianie IP - Janek
+
+przesterzeń nazw będzie jakaś do ustawienia (ustawiać w advanced albo w QR kodzie by się dało?? - ros Master URI oraz topic na prędkość może by się dało)
+przystępne ustawianie Ros Master URI
+
+
+sterowanie ramieniem:
+do ramienia:
+sensor_msgs/JoinState (chyba??)
+http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/JointState.html
+
+
+z czego name to nazwa przegubu
+a effort to faktyczne sterowanie
+effort od 0 do 100 prawdopodobnie (a nie w Nm jak jest chyba według założeń)
+
+
+w headerze:
+seq - seq id
+time stamp - konieczne aktualny czas!!
+to trzecie będzie niepootzerbne (chyba frame id)
+
+--jeszcze tego nie ma--
+gotowe pozycje??
+
+z kinematyką odwrotną:
+serwis, którego pytam o dane położenia (wszystkie presety) -> ściągnę te presety -> wybrać dany preset
+
+
+napisać to nawet póki tego nie ma, a potem dokładać to co będę wiedział
+-----------------------
+
+
+odbiór obrazu z kamery (dalszy plan)
+najlepiej po rtsp (bezpośrednio z jakiegoś urla żeby brało)
+
+
+
+
+
+w poleceniu rostopic echo /turtle1/cmd_vel:
+- turtle1 to przestrzeń nazw
+- cmd_vel to topic
+
+

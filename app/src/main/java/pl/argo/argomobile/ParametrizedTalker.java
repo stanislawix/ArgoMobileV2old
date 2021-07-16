@@ -6,8 +6,9 @@ import org.ros.node.AbstractNodeMain;  // This library give us the AbstractNodeM
 import org.ros.node.ConnectedNode;
 import org.ros.node.NodeMain;
 import org.ros.node.topic.Publisher;  // Import the publisher
+import geometry_msgs.Twist;
+//import sensor_msgs.JointState;
 
-//import lombok.Data;
 import lombok.Data;
 
 
@@ -22,7 +23,10 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
     Vector3Implemenation linear = new Vector3Implemenation();
     Vector3Implemenation angular = new Vector3Implemenation();
 
-    private geometry_msgs.Twist twist;
+    private Twist twist;
+    //private JointState aX, aY;
+    //private JointState bX, bY;
+    //private JointState cX, cY;
 
     @Override
     public GraphName getDefaultNodeName() {

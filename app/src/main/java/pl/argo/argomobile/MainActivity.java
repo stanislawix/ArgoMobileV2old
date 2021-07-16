@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import org.ros.android.RosActivity;
@@ -18,9 +18,9 @@ import io.github.controlwear.virtual.joystick.android.JoystickView;
 public class MainActivity extends RosActivity {
 
     private ParametrizedTalker talker;
-    private RosTextView<std_msgs.String> rosTextView;
+    //private RosTextView<std_msgs.String> rosTextView;
 
-    public int scale = 1;
+    public double scale = 0.2;
 
     public MainActivity() {
         // The RosActivity constructor configures the notification title and ticker
@@ -47,90 +47,34 @@ public class MainActivity extends RosActivity {
 
         //TextView textView2 = (TextView) findViewById(R.id.textView2);
         JoystickView joystickLinear = (JoystickView) findViewById(R.id.joystickLinear);
-        JoystickView joystickAngular = (JoystickView) findViewById(R.id.joystickAngular);
-
-        RadioGroup scaleGroup = (RadioGroup) findViewById(R.id.scaleGroup);
-
-        //Button
-
-        /*final int[] scale = {0};
-
-        scaleGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Log.d("checkedId = ", String.valueOf(checkedId));
-            }
-
-            public void onRadioButtonClicked(View view) {
-                // Is the button now checked?
-                boolean checked = ((RadioButton) view).isChecked();
-
-                // Check which radio button was clicked
-                switch(view.getId()) {
-                    case R.id.radio_1:
-                        if (checked)
-                            scale[0] = 1;
-                            break;
-                    case R.id.radio_20:
-                        if (checked)
-                            scale[0] = 20;
-                            break;
-                    case R.id.radio_100:
-                        if (checked)
-                            scale[0] = 100;
-                        break;
-                }
-                Log.d("scale = ", String.valueOf(scale[0]));
-            }
-
-        });*/
-
-        //boolean checked = ((RadioButton) view
 
         joystickLinear.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
-                double x = Math.round(strength * Math.cos(angle * Math.PI / 180) * 100) / 100.00 * scale / 100.00;
-                double y = Math.round(strength * Math.sin(angle * Math.PI / 180) * 100) / 100.00 * scale / 100.00;
-                double z = 0;
+                double tmp = Math.round(strength * Math.cos(angle * Math.PI / 180) * 100 * scale / 100.00 ) / 100.00;
+                double y = Math.round(strength * Math.sin(angle * Math.PI / 180) * 100 * scale / 100.00) / 100.00;
+                double x, z;
 
-                String angleStrengthText = "Linear Joystick:\n";
+                if(!((Switch) findViewById(R.id.isAngular)).isChecked()) {
+                    x = tmp;
+                    z = 0;
+                }
+                else {
+                    x = 0;
+                    z = -tmp;
+                }
+
+                String angleStrengthText = "";
                 angleStrengthText += "angle = " + angle + "°\n";
                 angleStrengthText += "strength = " + strength + "%\n";
-                angleStrengthText += "x = " + x + "\n";
-                angleStrengthText += "y = " + y + "\n";
-                angleStrengthText += "z = " + z;
-
+                angleStrengthText += "xLinear = " + x + "\n";
+                angleStrengthText += "yLinear = " + y + "\n";
+                angleStrengthText += "zAngular = " + z;
 
                 ((TextView) findViewById(R.id.LinearJoystickInfo)).setText(angleStrengthText);
 
-                //talker.setAngular(((Switch) findViewById(R.id.isAngular)).isChecked());
-
                 talker.getLinear().setX(x);
                 talker.getLinear().setY(y);
-                talker.getLinear().setZ(z);
-            }
-        });
-
-        joystickAngular.setOnMoveListener(new JoystickView.OnMoveListener() {
-
-            @Override
-            public void onMove(int angle, int strength) {
-                double x = 0;
-                double y = 0;
-                double z = - Math.round(strength * Math.cos(angle * Math.PI / 180) * 100) / 100.00 * scale / 100.00;
-
-                String angleStrengthText = "Angular Joystick:\n";
-                angleStrengthText += "angle = " + angle + "°\n";
-                angleStrengthText += "strength = " + strength + "%\n";
-                angleStrengthText += "x = " + x + "\n";
-                angleStrengthText += "y = " + y + "\n";
-                angleStrengthText += "z = " + z;
-
-                ((TextView) findViewById(R.id.AngularJoystickInfo)).setText(angleStrengthText);
-
-                talker.getAngular().setX(x);
-                talker.getAngular().setY(y);
                 talker.getAngular().setZ(z);
             }
         });
@@ -139,7 +83,6 @@ public class MainActivity extends RosActivity {
     @Override
     protected void init(NodeMainExecutor nodeMainExecutor) {
         talker = new ParametrizedTalker();
-        //ParametrizedTalkerV2 talker = new ParametrizedTalkerV2();
 
         // At this point, the user has already been prompted to either enter the URI
         // of a master to use or to start a master locally.
@@ -163,17 +106,17 @@ public class MainActivity extends RosActivity {
 
         // Check which radio button was clicked
         switch(view.getId()) {
+            case R.id.radio_0_2:
+                if (checked)
+                    scale = 0.2;
+                break;
+            case R.id.radio_0_5:
+                if (checked)
+                    scale = 0.5;
+                break;
             case R.id.radio_1:
                 if (checked)
                     scale = 1;
-                break;
-            case R.id.radio_20:
-                if (checked)
-                    scale = 20;
-                break;
-            case R.id.radio_100:
-                if (checked)
-                    scale = 100;
                 break;
         }
         Log.d("scale = ", String.valueOf(scale));

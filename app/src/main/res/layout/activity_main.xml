@@ -21,32 +21,15 @@
         app:layout_constraintVertical_bias="0.581" />-->
 
     <TextView
-        android:id="@+id/AngularJoystickInfo"
+        android:id="@+id/LinearJoystickInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Angular Joystick:"
+        android:text="Linear Joystick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.747"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.73" />
-
-    <io.github.controlwear.virtual.joystick.android.JoystickView
-        android:id="@+id/joystickAngular"
-        android:layout_width="177dp"
-        android:layout_height="158dp"
-        android:layout_marginEnd="36dp"
-        app:JV_backgroundColor="@android:color/tertiary_text_light"
-        app:JV_borderColor="#00796B"
-        app:JV_borderWidth="4dp"
-        app:JV_buttonColor="@android:color/black"
-        app:JV_buttonSizeRatio="50%"
-        app:JV_fixedCenter="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.964" />
 
     <io.github.controlwear.virtual.joystick.android.JoystickView
         android:id="@+id/joystickLinear"
@@ -59,22 +42,10 @@
         app:JV_buttonSizeRatio="50%"
         app:JV_fixedCenter="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/joystickAngular"
-        app:layout_constraintHorizontal_bias="0.559"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/LinearJoystickInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Linear Joystick"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.243"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.731" />
+        app:layout_constraintVertical_bias="0.828" />
 
     <org.ros.android.view.RosTextView
         android:id="@+id/text"
@@ -88,8 +59,8 @@
 
     <RadioGroup
         android:id="@+id/scaleGroup"
-        android:layout_width="152dp"
-        android:layout_height="95dp"
+        android:layout_width="70dp"
+        android:layout_height="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,26 +68,26 @@
         app:layout_constraintVertical_bias="0.050000012">
 
         <RadioButton
-            android:id="@+id/radio_1"
+            android:id="@+id/radio_0_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="1"
-            android:onClick="onRadioButtonClicked" />
+            android:onClick="onRadioButtonClicked"
+            android:text="0.2" />
 
         <RadioButton
-            android:id="@+id/radio_20"
+            android:id="@+id/radio_0_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="20"
-            android:onClick="onRadioButtonClicked" />
+            android:onClick="onRadioButtonClicked"
+            android:text="0.5" />
 
         <RadioButton
-            android:id="@+id/radio_100"
+            android:id="@+id/radio_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="100"
-            android:onClick="onRadioButtonClicked" />
+            android:onClick="onRadioButtonClicked"
+            android:text="1" />
     </RadioGroup>
 
     <TextView
@@ -126,10 +97,20 @@
         android:text="scale ="
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintHorizontal_bias="0.29"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.203" />
+
+    <Switch
+        android:id="@+id/isAngular"
+        android:layout_width="153dp"
+        android:layout_height="19dp"
+        android:layout_marginBottom="24dp"
+        android:text="Linear/Angular"
+        app:layout_constraintBottom_toTopOf="@+id/joystickLinear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

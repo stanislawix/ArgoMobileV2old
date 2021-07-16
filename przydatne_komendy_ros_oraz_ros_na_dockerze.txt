@@ -5,9 +5,16 @@ Ustawienie zmiennych środowiskowych:
 - jednorazowo:
 source /opt/ros/melodic/setup.bash
 
+source ~/catkin_ws/devel/setup.bash
+
+
 - na stałe:
 echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
+
+echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc"
+
+
 
 Przydatne komendy do obsługi:
 
@@ -33,3 +40,11 @@ rosservice type /clear - czyści planszę łazika
 
 - symulacja gazebo:
 sudo apt-get install ros-melodic-gazebo-ros-pkgs ros-melodic-gazebo-ros-control
+
+
+
+
+rostopic list
+rosservice list
+
+http://gazebosim.org/tutorials?tut=ros_installing
