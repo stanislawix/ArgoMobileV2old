@@ -20,10 +20,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.581" />-->
 
+    <TextView
+        android:id="@+id/LinearJoystickInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Linear Joystick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.964" />
+
     <io.github.controlwear.virtual.joystick.android.JoystickView
-        android:id="@+id/joystickView2"
-        android:layout_width="247dp"
-        android:layout_height="215dp"
+        android:id="@+id/joystickLinear"
+        android:layout_width="177dp"
+        android:layout_height="158dp"
         app:JV_backgroundColor="@android:color/tertiary_text_light"
         app:JV_borderColor="#00796B"
         app:JV_borderWidth="4dp"
@@ -33,19 +44,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.744" />
+        app:layout_constraintVertical_bias="0.828" />
 
     <org.ros.android.view.RosTextView
         android:id="@+id/text"
@@ -56,6 +56,61 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.079" />
+
+    <RadioGroup
+        android:id="@+id/scaleGroup"
+        android:layout_width="70dp"
+        android:layout_height="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text"
+        app:layout_constraintVertical_bias="0.050000012">
+
+        <RadioButton
+            android:id="@+id/radio_0_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:onClick="onRadioButtonClicked"
+            android:text="0.2" />
+
+        <RadioButton
+            android:id="@+id/radio_0_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:text="0.5" />
+
+        <RadioButton
+            android:id="@+id/radio_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:text="1" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/scale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="scale ="
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.29"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.203" />
+
+    <Switch
+        android:id="@+id/isAngular"
+        android:layout_width="153dp"
+        android:layout_height="19dp"
+        android:layout_marginBottom="24dp"
+        android:text="Linear/Angular"
+        app:layout_constraintBottom_toTopOf="@+id/joystickLinear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
