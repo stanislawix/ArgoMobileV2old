@@ -12,7 +12,7 @@ source ~/catkin_ws/devel/setup.bash
 echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 
-echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc"
+echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 
 
 
@@ -48,3 +48,23 @@ rostopic list
 rosservice list
 
 http://gazebosim.org/tutorials?tut=ros_installing
+
+
+
+
+
+roslaunch model display.launch
+
+sudo apt install ros-melodic-xacro
+
+sudo apt-get install ros-melodic-joint-state-publisher
+sudo apt-get install ros-melodic-joint-state-publisher-gui
+
+
+
+docker commit -a ondreo <<current_container_name>>  ondreorepo/ros:melodic
+
+
+docker run --env="DISPLAY" --volume="$HOME/.Xauthority:/root/.Xauthority:rw" --name ros_melodic -it ondreorepo/ros:melodic
+
+docker run DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v "$HOME/.Xauthority:/root/.Xauthority:rw" --name ros_melodic -it ondreorepo/ros:melodic

@@ -8,9 +8,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import org.ros.android.RosActivity;
-import org.ros.android.view.RosTextView;
+//import org.ros.android.view.RosTextView;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
+
+import java.util.Collections;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
@@ -21,6 +23,8 @@ public class MainActivity extends RosActivity {
     //private RosTextView<std_msgs.String> rosTextView;
 
     public double scale = 0.2;
+
+    double x, y, z;
 
     public MainActivity() {
         // The RosActivity constructor configures the notification title and ticker
@@ -46,36 +50,45 @@ public class MainActivity extends RosActivity {
         });*/
 
         //TextView textView2 = (TextView) findViewById(R.id.textView2);
-        JoystickView joystickLinear = (JoystickView) findViewById(R.id.joystickLinear);
+        JoystickView cmdVelJoystick = (JoystickView) findViewById(R.id.cmd_vel_joystick);
 
-        joystickLinear.setOnMoveListener(new JoystickView.OnMoveListener() {
+        cmdVelJoystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
-                double tmp = Math.round(strength * Math.cos(angle * Math.PI / 180) * 100 * scale / 100.00 ) / 100.00;
-                double y = Math.round(strength * Math.sin(angle * Math.PI / 180) * 100 * scale / 100.00) / 100.00;
-                double x, z;
+                ((TextView) findViewById(R.id.cmd_vel_joystick_info)).setText(countJoystickSwingValues(angle, strength));
 
-                if(!((Switch) findViewById(R.id.isAngular)).isChecked()) {
-                    x = tmp;
-                    z = 0;
-                }
+                if(!((Switch) findViewById(R.id.isAngular)).isChecked()) z = 0;
                 else {
+                    z = -x;
                     x = 0;
-                    z = -tmp;
                 }
-
-                String angleStrengthText = "";
-                angleStrengthText += "angle = " + angle + "°\n";
-                angleStrengthText += "strength = " + strength + "%\n";
-                angleStrengthText += "xLinear = " + x + "\n";
-                angleStrengthText += "yLinear = " + y + "\n";
-                angleStrengthText += "zAngular = " + z;
-
-                ((TextView) findViewById(R.id.LinearJoystickInfo)).setText(angleStrengthText);
 
                 talker.getLinear().setX(x);
                 talker.getLinear().setY(y);
                 talker.getAngular().setZ(z);
+            }
+        });
+
+        JoystickView manip1Joystick = (JoystickView) findViewById(R.id.manip_1_joystick);
+
+        manip1Joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
+
+            @Override
+            public void onMove(int angle, int strength) {
+                ((TextView) findViewById(R.id.cmd_vel_joystick_info)).setText(countJoystickSwingValues(angle, strength));
+
+                if(((Switch) findViewById(R.id.isAngular)).isChecked()) z = 0;
+                else {
+                    z = x;
+                    x = 0;
+                }
+
+                //TODO: zmienić na faktyczny ruch joysticka
+                talker.getManip1().setPosition(new double[]{0.05});
+
+                //talker.getLinear().setX(x);
+                //talker.getLinear().setY(y);
+                //talker.getAngular().setZ(z);
             }
         });
     }
@@ -120,5 +133,18 @@ public class MainActivity extends RosActivity {
                 break;
         }
         Log.d("scale = ", String.valueOf(scale));
+    }
+
+    private String countJoystickSwingValues(int angle, int strength) {
+        x = Math.round(strength * Math.cos(angle * Math.PI / 180) * 100 * scale / 100.00 ) / 100.00;
+        y = Math.round(strength * Math.sin(angle * Math.PI / 180) * 100 * scale / 100.00) / 100.00;
+
+        String out = "";
+        out += "angle = " + angle + "°\n";
+        out += "strength = " + strength + "%\n";
+        out += "x = " + x + "\n";
+        out += "y = " + y + "\n";
+
+        return out;
     }
 }

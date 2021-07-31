@@ -21,18 +21,47 @@
         app:layout_constraintVertical_bias="0.581" />-->
 
     <TextView
-        android:id="@+id/LinearJoystickInfo"
+        android:id="@+id/manip_1_joystick_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Linear Joystick"
+        android:text="manip_1_joystick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/manip_1_joystick"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.964" />
+        app:layout_constraintVertical_bias="0.345" />
 
     <io.github.controlwear.virtual.joystick.android.JoystickView
-        android:id="@+id/joystickLinear"
+        android:id="@+id/manip_1_joystick"
+        android:layout_width="177dp"
+        android:layout_height="158dp"
+        app:JV_backgroundColor="@android:color/tertiary_text_light"
+        app:JV_borderColor="#00796B"
+        app:JV_borderWidth="4dp"
+        app:JV_buttonColor="@android:color/black"
+        app:JV_buttonSizeRatio="50%"
+        app:JV_fixedCenter="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.429" />
+
+    <TextView
+        android:id="@+id/cmd_vel_joystick_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cmd_vel_joystick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.722"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cmd_vel_joystick"
+        app:layout_constraintVertical_bias="0.215" />
+
+    <io.github.controlwear.virtual.joystick.android.JoystickView
+        android:id="@+id/cmd_vel_joystick"
         android:layout_width="177dp"
         android:layout_height="158dp"
         app:JV_backgroundColor="@android:color/tertiary_text_light"
@@ -106,11 +135,13 @@
         android:id="@+id/isAngular"
         android:layout_width="153dp"
         android:layout_height="19dp"
-        android:layout_marginBottom="24dp"
         android:text="Linear/Angular"
-        app:layout_constraintBottom_toTopOf="@+id/joystickLinear"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.127"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cmd_vel_joystick"
+        app:layout_constraintVertical_bias="0.239" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
