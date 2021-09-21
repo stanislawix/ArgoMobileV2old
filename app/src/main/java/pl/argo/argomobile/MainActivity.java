@@ -25,7 +25,7 @@ public class MainActivity extends RosActivity {
 
     double x, y, z;
 
-    double[] manipStates = new double[6];
+//    double[] manipStates = new double[6];
 
     public MainActivity() {
         // The RosActivity constructor configures the notification title and ticker
@@ -101,7 +101,7 @@ public class MainActivity extends RosActivity {
             }
         });*/
 
-        manip1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {//TODO: zrobić pozostałe 5!!!!!!!!
+        manip1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {//uprościć do jednej klasy
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //jajco
@@ -109,7 +109,94 @@ public class MainActivity extends RosActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                manipStates[0] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
+//                manipStates[0] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
+//                talker.setManipStates[0](seekBar.getProgress()-100);
+                talker.manipsStates[0] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                seekBar.setProgress(100);
+            }
+        });
+
+        manip2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                //jajco
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                talker.manipsStates[1] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                seekBar.setProgress(100);
+            }
+        });
+
+        manip3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                //jajco
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                talker.manipsStates[2] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                seekBar.setProgress(100);
+            }
+        });
+
+        manip4.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                //jajco
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                talker.manipsStates[3] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                seekBar.setProgress(100);
+            }
+        });
+
+        manip5.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                //jajco
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                talker.manipsStates[4] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                seekBar.setProgress(100);
+            }
+        });
+
+        manip6.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                //jajco
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                talker.manipsStates[5] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
             }
 
             @Override

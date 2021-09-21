@@ -9,8 +9,6 @@ import org.ros.node.NodeMain;
 import org.ros.node.topic.Publisher;  // Import the publisher
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
 
 import geometry_msgs.Twist;
 //import sensor_msgs.JointState;
@@ -35,6 +33,7 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
 
     private Twist twist;
 //    private JointState manip1;
+    double[] manipsStates = new double[6];
     private JointState manips;
 
     @Override
@@ -82,23 +81,26 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
                     twistPublisher.publish(twist);       // Publish the message (if running use rostopic list to see the message)
                 }
 
-                manip1 = jointStatePublisher.newMessage();
+                manips = jointStatePublisher.newMessage();
 
-                manip1.getHeader().setSeq(++seq);
-                manip1.getHeader().setStamp(Time.fromMillis(System.currentTimeMillis()));
-                manip1.setName(Collections.singletonList("manip_1"));
+                manips.getHeader().setSeq(++seq);
+                manips.getHeader().setStamp(Time.fromMillis(System.currentTimeMillis()));//asserting frame_id would be redundant
+//                manips.setName(Collections.singletonList("manip_1"));
+                manips.setName(Arrays.asList("manip_1", "manip_2", "manip_3", "manip_4", "manip_5", "manip_6"));
                 //manip1.setName(Collections.singletonList("L_finger_jnt"));
                 //manip1.setName(Collections.singletonList("manip_3"));
-                double tmp = seq%2 == 0 ? -0.05 : 0.05;
+//                double tmp = seq%2 == 0 ? -0.05 : 0.05;
                 //manip1.setPosition(new double[]{0.05});//TODO: zmienić na faktyczny ruch joysticka
 //                manip1.setPosition(new double[]{tmp});//TODO: zmienić na faktyczny ruch joysticka
 
                 //manip1.setEffort(new double[]{1});
-                manip1.setEffort(new double[]{1});//-100 do 100
+//                manips.setEffort(new double[]{1});//-100 do 100
+                manips.setEffort(null);
+                manips.setEffort(manipsStates);
 
 
                 //TODO: wysyłanie tylko niezerowych wartości
-                jointStatePublisher.publish(manip1);
+                jointStatePublisher.publish(manips);
 
 //                Thread.sleep(10);
                 Thread.sleep(100);
