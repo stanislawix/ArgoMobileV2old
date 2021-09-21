@@ -34,7 +34,8 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
 
 
     private Twist twist;
-    private JointState manip1;
+//    private JointState manip1;
+    private JointState manips;
 
     @Override
     public GraphName getDefaultNodeName() {
@@ -46,9 +47,11 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
         linear = new Vector3Implemenation();
         angular = new Vector3Implemenation();
         //final Publisher<geometry_msgs.Twist> twistPublisher = connectedNode.newPublisher("/turtle1/cmd_vel", geometry_msgs.Twist._TYPE); // That's how you create a publisher in Java!
-        final Publisher<geometry_msgs.Twist> twistPublisher = connectedNode.newPublisher("/turtle1/cmd_vel", "geometry_msgs/Twist"); // That's how you create a publisher in Java!
+//        final Publisher<geometry_msgs.Twist> twistPublisher = connectedNode.newPublisher("/turtle1/cmd_vel", "geometry_msgs/Twist"); // That's how you create a publisher in Java!
+        final Publisher<geometry_msgs.Twist> twistPublisher = connectedNode.newPublisher("/argo/cmd_vel", "geometry_msgs/Twist"); // That's how you create a publisher in Java!
 
-        final Publisher<sensor_msgs.JointState> jointStatePublisher = connectedNode.newPublisher("/joint_states", sensor_msgs.JointState._TYPE);
+//        final Publisher<sensor_msgs.JointState> jointStatePublisher = connectedNode.newPublisher("/joint_states", sensor_msgs.JointState._TYPE);
+        final Publisher<sensor_msgs.JointState> jointStatePublisher = connectedNode.newPublisher("/argo/joint_states", sensor_msgs.JointState._TYPE);
 
         // This CancellableLoop will be canceled automatically when the node shuts
         // down.
@@ -62,8 +65,12 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
             protected void loop() throws InterruptedException {
                 twist = twistPublisher.newMessage(); // Init a msg variable that of the publisher type
 
-                twist.getLinear().setX(linear.getX());
+                /*twist.getLinear().setX(linear.getX());
                 twist.getLinear().setY(linear.getY());
+                twist.getLinear().setZ(linear.getZ());*/
+
+                twist.getLinear().setX(linear.getY());//zamiana X i Y (tak mają roboty)
+                twist.getLinear().setY(linear.getX());
                 twist.getLinear().setZ(linear.getZ());
 
                 twist.getAngular().setX(angular.getX());
@@ -83,17 +90,19 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
                 //manip1.setName(Collections.singletonList("L_finger_jnt"));
                 //manip1.setName(Collections.singletonList("manip_3"));
                 double tmp = seq%2 == 0 ? -0.05 : 0.05;
-                //manip1.setPosition(new double[]{0.05});//TODO: zmienić
-                manip1.setPosition(new double[]{tmp});//TODO: zmienić
+                //manip1.setPosition(new double[]{0.05});//TODO: zmienić na faktyczny ruch joysticka
+//                manip1.setPosition(new double[]{tmp});//TODO: zmienić na faktyczny ruch joysticka
 
                 //manip1.setEffort(new double[]{1});
+                manip1.setEffort(new double[]{1});//-100 do 100
 
 
                 //TODO: wysyłanie tylko niezerowych wartości
                 jointStatePublisher.publish(manip1);
 
-                //Thread.sleep(10);             // Sleep for 1000 ms = 1 sec
-                Thread.sleep(1000);             // Sleep for 1000 ms = 1 sec
+//                Thread.sleep(10);
+                Thread.sleep(100);
+//                Thread.sleep(1000);             // Sleep for 1000 ms = 1 sec
             }
         });
     }

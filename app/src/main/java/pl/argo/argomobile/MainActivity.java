@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -11,8 +12,6 @@ import org.ros.android.RosActivity;
 //import org.ros.android.view.RosTextView;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
-
-import java.util.Collections;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
@@ -25,6 +24,8 @@ public class MainActivity extends RosActivity {
     public double scale = 0.2;
 
     double x, y, z;
+
+    double[] manipStates = new double[6];
 
     public MainActivity() {
         // The RosActivity constructor configures the notification title and ticker
@@ -69,26 +70,51 @@ public class MainActivity extends RosActivity {
             }
         });
 
-        JoystickView manip1Joystick = (JoystickView) findViewById(R.id.manip_1_joystick);
+//        JoystickView manip1Joystick = (JoystickView) findViewById(R.id.manip_1_joystick);
+        SeekBar manip1 = (SeekBar) findViewById(R.id.manip_1_seekbar);
+        SeekBar manip2 = (SeekBar) findViewById(R.id.manip_2_seekbar);
+        SeekBar manip3 = (SeekBar) findViewById(R.id.manip_3_seekbar);
+        SeekBar manip4 = (SeekBar) findViewById(R.id.manip_4_seekbar);
+        SeekBar manip5 = (SeekBar) findViewById(R.id.manip_5_seekbar);
+        SeekBar manip6 = (SeekBar) findViewById(R.id.manip_6_seekbar);
 
-        manip1Joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
+        /*manip1Joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
 
             @Override
             public void onMove(int angle, int strength) {
-                ((TextView) findViewById(R.id.cmd_vel_joystick_info)).setText(countJoystickSwingValues(angle, strength));
+//                ((TextView) findViewById(R.id.cmd_vel_joystick_info)).setText(countJoystickSwingValues(angle, strength));
 
-                if(((Switch) findViewById(R.id.isAngular)).isChecked()) z = 0;
+                *//*if(((Switch) findViewById(R.id.isAngular)).isChecked()) z = 0;
                 else {
                     z = x;
                     x = 0;
-                }
+                }*//*
 
                 //TODO: zmienić na faktyczny ruch joysticka
-                talker.getManip1().setPosition(new double[]{0.05});
+//                talker.getManip1().setPosition(new double[]{0.05});
+
+                talker.getManips().setPosition(new double[]{0.05});
 
                 //talker.getLinear().setX(x);
                 //talker.getLinear().setY(y);
                 //talker.getAngular().setZ(z);
+            }
+        });*/
+
+        manip1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {//TODO: zrobić pozostałe 5!!!!!!!!
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                //jajco
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                manipStates[0] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                seekBar.setProgress(100);
             }
         });
     }
@@ -131,6 +157,14 @@ public class MainActivity extends RosActivity {
                 if (checked)
                     scale = 1;
                 break;
+            case R.id.radio_3:
+                if (checked)
+                    scale = 3;
+                break;
+            case R.id.radio_6:
+                if (checked)
+                    scale = 6;
+                break;
         }
         Log.d("scale = ", String.valueOf(scale));
     }
@@ -147,4 +181,35 @@ public class MainActivity extends RosActivity {
 
         return out;
     }
+
+    /*public void onSeekBarChange(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_0_2:
+                if (checked)
+                    scale = 0.2;
+                break;
+            case R.id.radio_0_5:
+                if (checked)
+                    scale = 0.5;
+                break;
+            case R.id.radio_1:
+                if (checked)
+                    scale = 1;
+                break;
+            case R.id.radio_3:
+                if (checked)
+                    scale = 3;
+                break;
+            case R.id.radio_6:
+                if (checked)
+                    scale = 6;
+                break;
+        }
+        Log.d("scale = ", String.valueOf(scale));
+    }*/
 }
