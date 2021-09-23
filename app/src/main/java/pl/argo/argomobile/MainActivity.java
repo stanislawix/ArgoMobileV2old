@@ -25,7 +25,7 @@ public class MainActivity extends RosActivity {
 
     double x, y, z;
 
-//    double[] manipStates = new double[6];
+    //double[] manipsStates = new double[6];
 
     public MainActivity() {
         // The RosActivity constructor configures the notification title and ticker
@@ -104,14 +104,12 @@ public class MainActivity extends RosActivity {
         manip1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {//uprościć do jednej klasy
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //jajco
+                talker.manipsStates[0] = seekBar.getProgress()-100;
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-//                manipStates[0] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
-//                talker.setManipStates[0](seekBar.getProgress()-100);
-                talker.manipsStates[0] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
+                //nic
             }
 
             @Override
@@ -123,12 +121,12 @@ public class MainActivity extends RosActivity {
         manip2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //jajco
+                talker.manipsStates[1] = seekBar.getProgress()-100;
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                talker.manipsStates[1] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
+                //nic
             }
 
             @Override
@@ -140,12 +138,12 @@ public class MainActivity extends RosActivity {
         manip3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //jajco
+                talker.manipsStates[2] = seekBar.getProgress()-100;
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                talker.manipsStates[2] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
+                //nic
             }
 
             @Override
@@ -157,12 +155,12 @@ public class MainActivity extends RosActivity {
         manip4.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //jajco
+                talker.manipsStates[3] = seekBar.getProgress()-100;
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                talker.manipsStates[3] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
+                //nic
             }
 
             @Override
@@ -174,12 +172,12 @@ public class MainActivity extends RosActivity {
         manip5.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //jajco
+                talker.manipsStates[4] = seekBar.getProgress()-100;
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                talker.manipsStates[4] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
+                //nic
             }
 
             @Override
@@ -191,12 +189,12 @@ public class MainActivity extends RosActivity {
         manip6.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //jajco
+                talker.manipsStates[5] = seekBar.getProgress()-100;
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                talker.manipsStates[5] = seekBar.getProgress();//chyba dobrze, ale sprawdzić!
+                //nic
             }
 
             @Override
