@@ -95,7 +95,7 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
 
                 //manip1.setEffort(new double[]{1});
 //                manips.setEffort(new double[]{1});//-100 do 100
-                manips.setEffort(null);
+//                manips.setEffort(null);
                 manips.setEffort(manipsStates);
 
 
