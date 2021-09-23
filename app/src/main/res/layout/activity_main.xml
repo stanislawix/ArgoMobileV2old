@@ -21,18 +21,19 @@
         app:layout_constraintVertical_bias="0.581" />-->
 
     <TextView
-        android:id="@+id/LinearJoystickInfo"
+        android:id="@+id/cmd_vel_joystick_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Linear Joystick"
+        android:text="cmd_vel_joystick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.722"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.964" />
+        app:layout_constraintTop_toBottomOf="@+id/cmd_vel_joystick"
+        app:layout_constraintVertical_bias="0.215" />
 
     <io.github.controlwear.virtual.joystick.android.JoystickView
-        android:id="@+id/joystickLinear"
+        android:id="@+id/cmd_vel_joystick"
         android:layout_width="177dp"
         android:layout_height="158dp"
         app:JV_backgroundColor="@android:color/tertiary_text_light"
@@ -55,62 +56,279 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.079" />
-
-    <RadioGroup
-        android:id="@+id/scaleGroup"
-        android:layout_width="70dp"
-        android:layout_height="90dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text"
-        app:layout_constraintVertical_bias="0.050000012">
-
-        <RadioButton
-            android:id="@+id/radio_0_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:onClick="onRadioButtonClicked"
-            android:text="0.2" />
-
-        <RadioButton
-            android:id="@+id/radio_0_5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked"
-            android:text="0.5" />
-
-        <RadioButton
-            android:id="@+id/radio_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked"
-            android:text="1" />
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/scale"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="scale ="
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.29"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.203" />
+        app:layout_constraintVertical_bias="0.005" />
 
     <Switch
         android:id="@+id/isAngular"
         android:layout_width="153dp"
         android:layout_height="19dp"
-        android:layout_marginBottom="24dp"
         android:text="Linear/Angular"
-        app:layout_constraintBottom_toTopOf="@+id/joystickLinear"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.127"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cmd_vel_joystick"
+        app:layout_constraintVertical_bias="0.239" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="124dp"
+        android:layout_height="192dp"
+        tools:layout_editor_absoluteX="287dp"
+        tools:layout_editor_absoluteY="448dp">
+
+        <RadioGroup
+            android:id="@+id/scaleGroup"
+            android:layout_width="71dp"
+            android:layout_height="174dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text"
+            app:layout_constraintVertical_bias="0.993">
+
+            <RadioButton
+                android:id="@+id/radio_0_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:onClick="onRadioButtonClicked"
+                android:text="0.2" />
+
+            <RadioButton
+                android:id="@+id/radio_0_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="0.5" />
+
+            <RadioButton
+                android:id="@+id/radio_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="1" />
+
+            <RadioButton
+                android:id="@+id/radio_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="3" />
+
+            <RadioButton
+                android:id="@+id/radio_6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="6" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/scale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="scale ="
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.026"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_manip_1_3_5"
+        android:layout_width="177dp"
+        android:layout_height="275dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.068"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.138">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/manip_1_layout"
+            android:layout_width="175dp"
+            android:layout_height="89dp">
+
+            <SeekBar
+                android:id="@+id/manip_1_seekbar"
+                android:layout_width="175dp"
+                android:layout_height="50dp"
+                android:max="200"
+                android:progress="100"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/manip_1_info"
+                android:layout_width="175dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="1dp"
+                android:gravity="center"
+                android:text="manip_1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/manip_1_seekbar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/manip_3_layout"
+            android:layout_width="174dp"
+            android:layout_height="91dp">
+
+            <SeekBar
+                android:id="@+id/manip_3_seekbar"
+                android:layout_width="175dp"
+                android:layout_height="50dp"
+                android:max="200"
+                android:progress="100"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/manip_3_info"
+                android:layout_width="175dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="1dp"
+                android:gravity="center"
+                android:text="manip_3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/manip_3_seekbar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/manip_5_layout"
+            android:layout_width="174dp"
+            android:layout_height="94dp">
+
+            <SeekBar
+                android:id="@+id/manip_5_seekbar"
+                android:layout_width="175dp"
+                android:layout_height="50dp"
+                android:max="200"
+                android:progress="100"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/manip_5_info"
+                android:layout_width="175dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="1dp"
+                android:gravity="center"
+                android:text="manip_5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/manip_5_seekbar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_manip_2_4_6"
+        android:layout_width="177dp"
+        android:layout_height="275dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.138">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/manip_2_layout"
+            android:layout_width="175dp"
+            android:layout_height="89dp">
+
+            <SeekBar
+                android:id="@+id/manip_2_seekbar"
+                android:layout_width="175dp"
+                android:layout_height="50dp"
+                android:max="200"
+                android:progress="100"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/manip_2_info"
+                android:layout_width="175dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="1dp"
+                android:gravity="center"
+                android:text="manip_2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/manip_2_seekbar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/manip_4_layout"
+            android:layout_width="174dp"
+            android:layout_height="91dp">
+
+            <SeekBar
+                android:id="@+id/manip_4_seekbar"
+                android:layout_width="175dp"
+                android:layout_height="50dp"
+                android:max="200"
+                android:progress="100"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/manip_4_info"
+                android:layout_width="175dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="1dp"
+                android:gravity="center"
+                android:text="manip_4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/manip_4_seekbar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/manip_6_layout"
+            android:layout_width="174dp"
+            android:layout_height="94dp">
+
+            <SeekBar
+                android:id="@+id/manip_6_seekbar"
+                android:layout_width="175dp"
+                android:layout_height="50dp"
+                android:max="200"
+                android:progress="100"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/manip_6_info"
+                android:layout_width="175dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="1dp"
+                android:gravity="center"
+                android:text="manip_6"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/manip_6_seekbar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
