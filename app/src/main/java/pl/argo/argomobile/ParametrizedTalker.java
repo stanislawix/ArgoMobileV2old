@@ -69,7 +69,7 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
                 twist.getLinear().setZ(linear.getZ());*/
 
                 twist.getLinear().setX(linear.getY());//zamiana X i Y (tak mają roboty)
-                twist.getLinear().setY(linear.getX());
+                twist.getLinear().setY(-linear.getX());
                 twist.getLinear().setZ(linear.getZ());
 
                 twist.getAngular().setX(angular.getX());
