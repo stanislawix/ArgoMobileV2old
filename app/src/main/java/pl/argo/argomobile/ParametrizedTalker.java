@@ -76,10 +76,12 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
                 twist.getAngular().setY(angular.getY());
                 twist.getAngular().setZ(angular.getZ());
 
-                if(linear.getX() != 0 || linear.getY() != 0 || linear.getZ() != 0
+                /*if(linear.getX() != 0 || linear.getY() != 0 || linear.getZ() != 0
                 || angular.getX() != 0 || angular.getY() != 0 || angular.getZ() != 0) {
                     twistPublisher.publish(twist);       // Publish the message (if running use rostopic list to see the message)
-                }
+                }*/
+
+                twistPublisher.publish(twist);
 
                 manips = jointStatePublisher.newMessage();
 
