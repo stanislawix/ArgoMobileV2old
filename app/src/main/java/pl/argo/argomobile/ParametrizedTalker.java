@@ -45,9 +45,10 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
     public void onStart(final ConnectedNode connectedNode) {
         linear = new Vector3Implemenation();
         angular = new Vector3Implemenation();
-        //final Publisher<geometry_msgs.Twist> twistPublisher = connectedNode.newPublisher("/turtle1/cmd_vel", geometry_msgs.Twist._TYPE); // That's how you create a publisher in Java!
-//        final Publisher<geometry_msgs.Twist> twistPublisher = connectedNode.newPublisher("/turtle1/cmd_vel", "geometry_msgs/Twist"); // That's how you create a publisher in Java!
-        final Publisher<geometry_msgs.Twist> twistPublisher = connectedNode.newPublisher("/argo/cmd_vel", "geometry_msgs/Twist"); // That's how you create a publisher in Java!
+        //final Publisher<geometry_msgs.Twist> twistPublisher = connectedNode.newPublisher("/turtle1/cmd_vel", geometry_msgs.Twist._TYPE);
+//        final Publisher<geometry_msgs.Twist> twistPublisher = connectedNode.newPublisher("/turtle1/cmd_vel", "geometry_msgs/Twist");
+//        final Publisher<geometry_msgs.Twist> twistPublisher = connectedNode.newPublisher("/argo/cmd_vel", "geometry_msgs/Twist");
+        final Publisher<geometry_msgs.Twist> twistPublisher = connectedNode.newPublisher("/argo_mini/cmd_vel", "geometry_msgs/Twist");
 
 //        final Publisher<sensor_msgs.JointState> jointStatePublisher = connectedNode.newPublisher("/joint_states", sensor_msgs.JointState._TYPE);
         final Publisher<sensor_msgs.JointState> jointStatePublisher = connectedNode.newPublisher("/argo/joint_states", sensor_msgs.JointState._TYPE);
