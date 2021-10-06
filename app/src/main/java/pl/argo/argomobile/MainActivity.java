@@ -31,7 +31,7 @@ public class MainActivity extends RosActivity {
         // The RosActivity constructor configures the notification title and ticker
         // messages.
         //super("Pubsub Tutorial", "Pubsub Tutorial");
-        super("sampleNotificationTicker", "sampleNotificationTitle");
+        super("ArgoMobile", "ArgoMobile");
     }
 
 
