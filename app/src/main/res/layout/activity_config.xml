@@ -22,33 +22,51 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/manip_1_layout"
-        android:layout_width="175dp"
-        android:layout_height="89dp"
+        android:layout_width="236dp"
+        android:layout_height="82dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.25">
 
-        <pl.argo.argomobile.SeekBarWithValue
-            android:id="@+id/topic_sending_frequency"
-            android:layout_width="175dp"
-            android:layout_height="50dp"
+        <TextView
+            android:id="@+id/messageSendingFrequencyValue"
+            android:layout_width="46dp"
+            android:layout_height="29dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="44dp"
+            android:gravity="center"
+            android:text="100 Hz"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/messageSendingFrequencySeekBar"
+            app:layout_constraintTop_toBottomOf="@+id/manip_1_seekbar" />
+
+        <SeekBar
+            android:id="@+id/messageSendingFrequencySeekBar"
+            android:layout_width="184dp"
+            android:layout_height="51dp"
             android:max="200"
             android:progress="100"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/topic_sending_frequency_info"
-            android:layout_width="175dp"
-            android:layout_height="33dp"
+            android:id="@+id/messageSendingFrequencyInfo"
+            android:layout_width="184dp"
+            android:layout_height="31dp"
             android:layout_marginTop="1dp"
             android:gravity="center"
-            android:text="Topic Sending Frequency"
+            android:text="Message Sending Frequency"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/manip_1_seekbar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -95,6 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Robot name ="
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.026"
