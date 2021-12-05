@@ -3,4 +3,5 @@
     <string name="save">Save</string>
     <string name="my_string">horse</string>
     <string name="connectionTestButton">Let\'s send a message</string>
+    <string name="roverChooserTitle">Choose a rover</string>
 </resources>

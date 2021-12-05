@@ -3,10 +3,12 @@ package pl.argo.argomobile;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.ros.android.RosActivity;
 //import org.ros.android.view.RosTextView;
@@ -15,11 +17,12 @@ import org.ros.node.NodeMainExecutor;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
-
 public class MainActivity extends RosActivity {
 
+    public static final String ArgoMobile_TAG = "ArgoMobile";
+
     private ParametrizedTalker talker;
-    //private RosTextView<std_msgs.String> rosTextView;
+    //private RosTextView<std_msgs.String> rosTextView;//TextView na górze był wcześniej rodzaju RosTextView
 
     public double scale = 0.2;
 
@@ -100,6 +103,27 @@ public class MainActivity extends RosActivity {
                 //talker.getAngular().setZ(z);
             }
         });*/
+
+
+        manip1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(ArgoMobile_TAG, "hello, world!");
+                Toast.makeText(getBaseContext(), "anything", Toast.LENGTH_SHORT).show();
+                System.out.println("hello!!!");
+                //return true;
+            }
+        });
+
+        manip1.setOnContextClickListener(new View.OnContextClickListener() {
+            @Override
+            public boolean onContextClick(View v) {
+                Log.d(ArgoMobile_TAG, "hello, world!");
+                Toast.makeText(getBaseContext(), "anything", Toast.LENGTH_SHORT).show();
+                System.out.println("hello!!!");
+                return true;
+            }
+        });
 
         manip1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {//uprościć do jednej klasy
             @Override
@@ -265,6 +289,10 @@ public class MainActivity extends RosActivity {
         out += "y = " + y + "\n";
 
         return out;
+    }
+
+    public void onSeekBarClicked(View view) {
+        Toast.makeText(getBaseContext(), "same thing, but in the method", Toast.LENGTH_SHORT).show();
     }
 
     /*public void onSeekBarChange(View view) {

@@ -65,10 +65,6 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
             protected void loop() throws InterruptedException {
                 twist = twistPublisher.newMessage(); // Init a msg variable that of the publisher type
 
-                /*twist.getLinear().setX(linear.getX());
-                twist.getLinear().setY(linear.getY());
-                twist.getLinear().setZ(linear.getZ());*/
-
                 twist.getLinear().setX(linear.getY());//zamiana X i Y (tak mają roboty)
                 twist.getLinear().setY(-linear.getX());
                 twist.getLinear().setZ(linear.getZ());
