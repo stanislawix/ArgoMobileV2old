@@ -3,6 +3,9 @@ package pl.argo.argomobile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -15,6 +18,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 //import org.ros.android.view.RosTextView;
@@ -36,8 +40,25 @@ public class MainActivity extends RosActivity {//AppCompatActivity
 
     //double[] manipsStates = new double[6];
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.settingsButton) {
+            Intent intent = new Intent(this, RoverChooserActivity.class);
+            activityResultLauncher.launch(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public MainActivity() {
         super("ArgoMobile", "ArgoMobile");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.settings_menu, menu);
+        return true;
     }
 
 
