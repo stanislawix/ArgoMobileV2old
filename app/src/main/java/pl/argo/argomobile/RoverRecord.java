@@ -1,5 +1,7 @@
 package pl.argo.argomobile;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -7,9 +9,10 @@ import lombok.Data;
 @AllArgsConstructor
 public class RoverRecord {
 
+    private int id;
     private int imageId;
     private String name;
-    //private String description;
+    //JointState
 
-
+    //private boolean[] Joint
 }

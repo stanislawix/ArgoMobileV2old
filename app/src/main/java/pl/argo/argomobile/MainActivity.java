@@ -1,5 +1,6 @@
 package pl.argo.argomobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,14 +11,19 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.ros.android.RosActivity;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+
 //import org.ros.android.view.RosTextView;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
-public class MainActivity extends RosActivity {
+public class MainActivity extends RosActivity {//AppCompatActivity
 
     public static final String ArgoMobile_TAG = "ArgoMobile";
 
@@ -31,18 +37,36 @@ public class MainActivity extends RosActivity {
     //double[] manipsStates = new double[6];
 
     public MainActivity() {
-        // The RosActivity constructor configures the notification title and ticker
-        // messages.
-        //super("Pubsub Tutorial", "Pubsub Tutorial");
         super("ArgoMobile", "ArgoMobile");
     }
 
+
+    //AppCompatActivity appCompatActivity = new AppCompatActivity();
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if(result.getResultCode() == 1) {
+                        Intent intent = result.getData();
+                        //System.out.println("received roverName = " + intent.getStringExtra("roverName"));
+                        Log.d(ArgoMobile_TAG, "received roverId = " + intent.getIntExtra("roverId", -1));
+                    }
+                }
+            }
+    );
 
     //@SuppressWarnings("unchecked")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(savedInstanceState == null || savedInstanceState.getString("roverId") == null) {
+            Intent intent = new Intent(this, RoverChooserActivity.class);
+            activityResultLauncher.launch(intent);
+        }
+
         /*rosTextView = (RosTextView<std_msgs.String>) findViewById(R.id.text);
         rosTextView.setTopicName("hmm");
         rosTextView.setMessageType(std_msgs.String._TYPE);
@@ -56,74 +80,26 @@ public class MainActivity extends RosActivity {
         //TextView textView2 = (TextView) findViewById(R.id.textView2);
         JoystickView cmdVelJoystick = (JoystickView) findViewById(R.id.cmd_vel_joystick);
 
-        cmdVelJoystick.setOnMoveListener(new JoystickView.OnMoveListener() {
-            @Override
-            public void onMove(int angle, int strength) {
-                ((TextView) findViewById(R.id.cmd_vel_joystick_info)).setText(countJoystickSwingValues(angle, strength));
+        cmdVelJoystick.setOnMoveListener((angle, strength) -> {
+            ((TextView) findViewById(R.id.cmd_vel_joystick_info)).setText(countJoystickSwingValues(angle, strength));
 
-                if(!((Switch) findViewById(R.id.isAngular)).isChecked()) z = 0;
-                else {
-                    z = -x;
-                    x = 0;
-                }
-
-                talker.getLinear().setX(x);
-                talker.getLinear().setY(y);
-                talker.getAngular().setZ(z);
+            if(!((Switch) findViewById(R.id.isAngular)).isChecked()) z = 0;
+            else {
+                z = -x;
+                x = 0;
             }
+
+            talker.getLinear().setX(x);
+            talker.getLinear().setY(y);
+            talker.getAngular().setZ(z);
         });
 
-//        JoystickView manip1Joystick = (JoystickView) findViewById(R.id.manip_1_joystick);
         SeekBar manip1 = (SeekBar) findViewById(R.id.manip_1_seekbar);
         SeekBar manip2 = (SeekBar) findViewById(R.id.manip_2_seekbar);
         SeekBar manip3 = (SeekBar) findViewById(R.id.manip_3_seekbar);
         SeekBar manip4 = (SeekBar) findViewById(R.id.manip_4_seekbar);
         SeekBar manip5 = (SeekBar) findViewById(R.id.manip_5_seekbar);
         SeekBar manip6 = (SeekBar) findViewById(R.id.manip_6_seekbar);
-
-        /*manip1Joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
-
-            @Override
-            public void onMove(int angle, int strength) {
-//                ((TextView) findViewById(R.id.cmd_vel_joystick_info)).setText(countJoystickSwingValues(angle, strength));
-
-                *//*if(((Switch) findViewById(R.id.isAngular)).isChecked()) z = 0;
-                else {
-                    z = x;
-                    x = 0;
-                }*//*
-
-                //TODO: zmienić na faktyczny ruch joysticka
-//                talker.getManip1().setPosition(new double[]{0.05});
-
-                talker.getManips().setPosition(new double[]{0.05});
-
-                //talker.getLinear().setX(x);
-                //talker.getLinear().setY(y);
-                //talker.getAngular().setZ(z);
-            }
-        });*/
-
-
-        manip1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(ArgoMobile_TAG, "hello, world!");
-                Toast.makeText(getBaseContext(), "anything", Toast.LENGTH_SHORT).show();
-                System.out.println("hello!!!");
-                //return true;
-            }
-        });
-
-        manip1.setOnContextClickListener(new View.OnContextClickListener() {
-            @Override
-            public boolean onContextClick(View v) {
-                Log.d(ArgoMobile_TAG, "hello, world!");
-                Toast.makeText(getBaseContext(), "anything", Toast.LENGTH_SHORT).show();
-                System.out.println("hello!!!");
-                return true;
-            }
-        });
 
         manip1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {//uprościć do jednej klasy
             @Override
