@@ -1,6 +1,7 @@
 package pl.argo.argomobile;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -41,8 +42,10 @@ public class MainActivity extends RosActivity {//AppCompatActivity
 
     private int roverId;
 
+    private SharedPreferences mPrefs;
+
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {//TODO: przenieść niżej
         if (item.getItemId() == R.id.settingsButton) {
             Intent intent = new Intent(this, RoverChooserActivity.class);
             activityResultLauncher.launch(intent);
@@ -62,8 +65,6 @@ public class MainActivity extends RosActivity {//AppCompatActivity
         return true;
     }
 
-
-    //AppCompatActivity appCompatActivity = new AppCompatActivity();
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -71,46 +72,27 @@ public class MainActivity extends RosActivity {//AppCompatActivity
                 public void onActivityResult(ActivityResult result) {
                     if(result.getResultCode() == 1) {
                         Intent intent = result.getData();
-                        //System.out.println("received roverName = " + intent.getStringExtra("roverName"));
-                        Log.d(TAG, "received roverId = " + intent.getIntExtra("roverId", -1));
-
-
-                        RoverService roverService = RoverService.getInstance();
-
-                        TextView roverName = findViewById(R.id.roverName);
                         roverId = intent.getIntExtra("roverId", -1);
-                        roverName.setText(roverService.getRoverById(roverId).getName());
+                        updateActivityContent();
                     }
                 }
             }
     );
-
-    /*@Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-
-        //Log.d(TAG, "onCreate: savedInstanceState=" + savedInstanceState);
-
-        if(savedInstanceState == null || savedInstanceState.getString("roverId") == null) {
-            Intent intent = new Intent(this, RoverChooserActivity.class);
-            activityResultLauncher.launch(intent);
-        }
-        else roverId = savedInstanceState.getInt("roverId");
-    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(TAG, "onCreate: savedInstanceState=" + savedInstanceState);
+        mPrefs = getSharedPreferences(getLocalClassName(), MODE_PRIVATE);
+        roverId = mPrefs.getInt("roverId", -1);
 
-        if(savedInstanceState == null || savedInstanceState.getString("roverId") == null) {
+        if(roverId == -1) {
             Intent intent = new Intent(this, RoverChooserActivity.class);
             activityResultLauncher.launch(intent);
         }
-        else roverId = savedInstanceState.getInt("roverId");
+
+        updateActivityContent();
 
         /*rosTextView = (RosTextView<std_msgs.String>) findViewById(R.id.text);
         rosTextView.setTopicName("hmm");
@@ -250,9 +232,19 @@ public class MainActivity extends RosActivity {//AppCompatActivity
     }
 
     @Override
-    protected void onSaveInstanceState(@NotNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt("roverId", roverId);
+    protected void onPause() {
+        super.onPause();
+
+        SharedPreferences.Editor editor = mPrefs.edit();
+        editor.putInt("roverId", roverId);
+        editor.commit();
+    }
+
+    private void updateActivityContent() {
+        RoverService roverService = RoverService.getInstance();
+
+        TextView roverName = findViewById(R.id.roverName);
+        roverName.setText(roverService.getRoverById(roverId).getName());
     }
 
     @Override
