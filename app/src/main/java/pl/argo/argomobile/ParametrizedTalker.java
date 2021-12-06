@@ -90,19 +90,22 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
                     twist.getAngular().setY(angular.getY());
                     twist.getAngular().setZ(angular.getZ());
 
-
-                    manips = jointStatePublisher.newMessage();
-
-                    manips.getHeader().setSeq(++seq);
-                    manips.getHeader().setStamp(Time.fromMillis(System.currentTimeMillis()));//dodawanie dodatkowo frame_id jest niepotrzebne
-
-                    manips.setName(roverRecord.getJointNames());
-                    //manips.setPosition(manipsStates);
-                    //manips.setVelocity(manipsStates);
-                    manips.setEffort(manipsStates);
-
                     twistPublisher.publish(twist);
-                    jointStatePublisher.publish(manips);
+
+                    if(roverRecord.getJointNames() != null) {
+                        manips = jointStatePublisher.newMessage();
+
+                        manips.getHeader().setSeq(++seq);
+                        manips.getHeader().setStamp(Time.fromMillis(System.currentTimeMillis()));//dodawanie dodatkowo frame_id jest niepotrzebne
+
+                        manips.setName(roverRecord.getJointNames());
+                        //manips.setPosition(manipsStates);
+                        //manips.setVelocity(manipsStates);
+                        manips.setEffort(manipsStates);
+                        jointStatePublisher.publish(manips);
+                    }
+
+
 
 
                     long elapsedTime = Calendar.getInstance().getTimeInMillis() - startTime;

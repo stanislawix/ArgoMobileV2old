@@ -183,7 +183,8 @@ public class MainActivity extends RosActivity {//AppCompatActivity
         roverName.setText(getString(R.string.current_rover) + roverRecord.getName());
 
         if(talker != null) {
-            talker.initializeManipsStates(roverRecord.getJointNames().size());
+            if(roverRecord.getJointNames() != null) talker.initializeManipsStates(roverRecord.getJointNames().size());
+            else talker.initializeManipsStates(0);
             talker.setRoverRecord(roverRecord);
         }
 
