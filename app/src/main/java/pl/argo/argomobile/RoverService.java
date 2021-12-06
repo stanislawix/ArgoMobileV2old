@@ -20,6 +20,7 @@ public class RoverService {
         roverRecordsList.add(new RoverRecord(3, R.drawable.hyperion, "Hyperion", "hyperion", Arrays.asList("manip_1", "manip_2", "manip_3", "manip_4")));
         roverRecordsList.add(new RoverRecord(4, R.drawable.next, "Next", "next", Arrays.asList("joint1", "joint2", "joint3", "joint4")));
         roverRecordsList.add(new RoverRecord(5, R.drawable.red, "Red", "red", Arrays.asList("manip1", "manip2", "manip3", "manip4")));
+        roverRecordsList.add(new RoverRecord(6, R.drawable.turtle, "Turtle", "turtle", null));
     }
 
     public static RoverService getInstance() {
