@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoverService {
-    private static List<RoverRecord> roverRecordsList = new ArrayList<>();
 
-    static {
+    private static RoverService instance;
+
+    private List<RoverRecord> roverRecordsList;
+
+    private RoverService() {
+        roverRecordsList = new ArrayList<>();
+
         roverRecordsList.add(new RoverRecord(1, R.drawable.argo_v1, "Argo V1"));
         roverRecordsList.add(new RoverRecord(2, R.drawable.argo_v2, "Argo V2"));
         roverRecordsList.add(new RoverRecord(3, R.drawable.argo_v3, "Argo V3"));
@@ -21,7 +26,12 @@ public class RoverService {
         roverRecordsList.add(new RoverRecord(11, R.drawable.argo_v3, "Argo V3"));
     }
 
-    public static RoverRecord getRoverById(int id) {
+    public static RoverService getInstance() {
+        if (instance == null) instance = new RoverService();
+        return instance;
+    }
+
+    public RoverRecord getRoverById(int id) {
         return roverRecordsList
                 .stream()
                 .filter(x -> x.getId() == id)
@@ -29,7 +39,7 @@ public class RoverService {
                 .orElse(null);
     }
 
-    public static List<RoverRecord> getAllRovers() {
+    public List<RoverRecord> getAllRovers() {
         return roverRecordsList;
     }
 }

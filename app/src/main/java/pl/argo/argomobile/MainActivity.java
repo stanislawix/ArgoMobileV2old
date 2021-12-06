@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
@@ -19,9 +18,9 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 //import org.ros.android.view.RosTextView;
+import org.jetbrains.annotations.NotNull;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
 
@@ -29,7 +28,7 @@ import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 public class MainActivity extends RosActivity {//AppCompatActivity
 
-    public static final String ArgoMobile_TAG = "ArgoMobile";
+    public static final String TAG = "ArgoMobile";
 
     private ParametrizedTalker talker;
     //private RosTextView<std_msgs.String> rosTextView;//TextView na górze był wcześniej rodzaju RosTextView
@@ -39,6 +38,8 @@ public class MainActivity extends RosActivity {//AppCompatActivity
     double x, y, z;
 
     //double[] manipsStates = new double[6];
+
+    private int roverId;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -71,22 +72,45 @@ public class MainActivity extends RosActivity {//AppCompatActivity
                     if(result.getResultCode() == 1) {
                         Intent intent = result.getData();
                         //System.out.println("received roverName = " + intent.getStringExtra("roverName"));
-                        Log.d(ArgoMobile_TAG, "received roverId = " + intent.getIntExtra("roverId", -1));
+                        Log.d(TAG, "received roverId = " + intent.getIntExtra("roverId", -1));
+
+
+                        RoverService roverService = RoverService.getInstance();
+
+                        TextView roverName = findViewById(R.id.roverName);
+                        roverId = intent.getIntExtra("roverId", -1);
+                        roverName.setText(roverService.getRoverById(roverId).getName());
                     }
                 }
             }
     );
 
-    //@SuppressWarnings("unchecked")
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    /*@Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+
+        //Log.d(TAG, "onCreate: savedInstanceState=" + savedInstanceState);
 
         if(savedInstanceState == null || savedInstanceState.getString("roverId") == null) {
             Intent intent = new Intent(this, RoverChooserActivity.class);
             activityResultLauncher.launch(intent);
         }
+        else roverId = savedInstanceState.getInt("roverId");
+    }*/
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Log.d(TAG, "onCreate: savedInstanceState=" + savedInstanceState);
+
+        if(savedInstanceState == null || savedInstanceState.getString("roverId") == null) {
+            Intent intent = new Intent(this, RoverChooserActivity.class);
+            activityResultLauncher.launch(intent);
+        }
+        else roverId = savedInstanceState.getInt("roverId");
 
         /*rosTextView = (RosTextView<std_msgs.String>) findViewById(R.id.text);
         rosTextView.setTopicName("hmm");
@@ -223,6 +247,12 @@ public class MainActivity extends RosActivity {//AppCompatActivity
                 seekBar.setProgress(100);
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NotNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("roverId", roverId);
     }
 
     @Override
