@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="roverChooserTitle">Wybór łazika</string>
+    <string name="no_rover_was_chosen">Nie wybrano żadnego łazika!</string>
+    <string name="unable_to_communicate_with_server">Nie można skorzystać z tej funkcjonalności - brak połączenia z serwerem!</string>
+    <string name="current_rover">Obsługiwany łazik:\ </string>
 </resources>

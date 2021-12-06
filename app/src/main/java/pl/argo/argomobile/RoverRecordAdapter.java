@@ -1,5 +1,6 @@
 package pl.argo.argomobile;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ public class RoverRecordAdapter extends ArrayAdapter<RoverRecord> {
         super(context, resource, objects);
     }
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -29,9 +31,11 @@ public class RoverRecordAdapter extends ArrayAdapter<RoverRecord> {
 
         ImageView roverImage = convertView.findViewById(R.id.roverImage);
         TextView roverName = convertView.findViewById(R.id.roverName);
+        TextView roverTopicPrefix = convertView.findViewById(R.id.roverTopicPrefix);
 
         roverImage.setImageResource(getItem(position).getImageId());
         roverName.setText(getItem(position).getName());
+        roverTopicPrefix.setText("topicPrefix = /" + getItem(position).getTopicPrefix());
 
         return convertView;
     }

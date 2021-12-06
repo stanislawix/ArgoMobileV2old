@@ -34,14 +34,10 @@ public class RoverChooserActivity extends Activity {
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
             RoverRecord roverRecord = (RoverRecord) listView.getItemAtPosition(position);
-            Toast.makeText(RoverChooserActivity.this, "position = " + position, Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "roverRecord = " + roverRecord.toString());
 
             Intent returnIntent = new Intent();
             returnIntent.putExtra("roverId", roverRecord.getId());
-            returnIntent.putExtra("roverName", roverRecord.getName());
             setResult(1, returnIntent);
-            //setResult(3,returnIntent);
             finish();
         });
     }

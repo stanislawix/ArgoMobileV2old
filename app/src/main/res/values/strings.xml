@@ -4,4 +4,7 @@
     <string name="my_string">horse</string>
     <string name="connectionTestButton">Let\'s send a message</string>
     <string name="roverChooserTitle">Choose a rover</string>
+    <string name="no_rover_was_chosen">No rover was chosen!</string>
+    <string name="unable_to_communicate_with_server">You can\'t use this functionality right now - unable to communicate with the master server!</string>
+    <string name="current_rover">Current rover:\ </string>
 </resources>

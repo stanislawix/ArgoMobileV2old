@@ -1,6 +1,9 @@
 package pl.argo.argomobile;
 
+import android.widget.ArrayAdapter;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class RoverService {
@@ -12,18 +15,11 @@ public class RoverService {
     private RoverService() {
         roverRecordsList = new ArrayList<>();
 
-        roverRecordsList.add(new RoverRecord(1, R.drawable.argo_v1, "Argo V1"));
-        roverRecordsList.add(new RoverRecord(2, R.drawable.argo_v2, "Argo V2"));
-        roverRecordsList.add(new RoverRecord(3, R.drawable.argo_v3, "Argo V3"));
-
-        roverRecordsList.add(new RoverRecord(4, R.drawable.argo_v3, "Argo V3"));
-        roverRecordsList.add(new RoverRecord(5, R.drawable.argo_v3, "Argo V3"));
-        roverRecordsList.add(new RoverRecord(6, R.drawable.argo_v3, "Argo V3"));
-        roverRecordsList.add(new RoverRecord(7, R.drawable.argo_v3, "Argo V3"));
-        roverRecordsList.add(new RoverRecord(8, R.drawable.argo_v3, "Argo V3"));
-        roverRecordsList.add(new RoverRecord(9, R.drawable.argo_v3, "Argo V3"));
-        roverRecordsList.add(new RoverRecord(10, R.drawable.argo_v3, "Argo V3"));
-        roverRecordsList.add(new RoverRecord(11, R.drawable.argo_v3, "Argo V3"));
+        roverRecordsList.add(new RoverRecord(1, R.drawable.argo_v3, "Argo V3", "argo", Arrays.asList("manip_1", "manip_2", "manip_3", "manip_4", "manip_5", "manip_6")));//ta wersja jest chyba najlepsza
+        roverRecordsList.add(new RoverRecord(2, R.drawable.dzik, "Dzik", "argo_mini", null));
+        roverRecordsList.add(new RoverRecord(3, R.drawable.hyperion, "Hyperion", "hyperion", Arrays.asList("manip_1", "manip_2", "manip_3", "manip_4")));
+        roverRecordsList.add(new RoverRecord(4, R.drawable.next, "Next", "next", Arrays.asList("joint1", "joint2", "joint3", "joint4")));
+        roverRecordsList.add(new RoverRecord(5, R.drawable.red, "Red", "red", Arrays.asList("manip1", "manip2", "manip3", "manip4")));
     }
 
     public static RoverService getInstance() {

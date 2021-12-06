@@ -13,6 +13,14 @@
         style="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
         android:text="Rover name"/>
 
+    <TextView
+        android:id="@+id/roverTopicPrefix"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        style="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+        android:text="Topic prefix"/>
+
     <ImageView
         android:id="@+id/roverImage"
         android:src="@color/cardview_dark_background"
