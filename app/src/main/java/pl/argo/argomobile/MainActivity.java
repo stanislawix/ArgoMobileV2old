@@ -127,9 +127,6 @@ public class MainActivity extends RosActivity {//AppCompatActivity
         SeekBar[] manips = new SeekBar[6];
         for(int i=0; i<6; ++i) {
             manips[i] = (SeekBar) findViewById(getResId("manip_" + (i+1) + "_seekbar", R.id.class));
-            //System.out.println("manips[" + i + "] = " + manips[i]);
-            //Log.d(TAG, "manips[" + i + "] = " + manips[i].getId());
-
             int iCopy = i;
             manips[i].setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
@@ -148,123 +145,6 @@ public class MainActivity extends RosActivity {//AppCompatActivity
                 }
             });
         }
-        //System.out.println("manips = " + Arrays.toString(manips));
-
-        SeekBar manip1 = (SeekBar) findViewById(R.id.manip_1_seekbar);
-        SeekBar manip2 = (SeekBar) findViewById(R.id.manip_2_seekbar);
-        SeekBar manip3 = (SeekBar) findViewById(R.id.manip_3_seekbar);
-        SeekBar manip4 = (SeekBar) findViewById(R.id.manip_4_seekbar);
-        SeekBar manip5 = (SeekBar) findViewById(R.id.manip_5_seekbar);
-        SeekBar manip6 = (SeekBar) findViewById(R.id.manip_6_seekbar);
-
-        Log.d(TAG, "manip1 = " + manip1.getId());
-        Log.d(TAG, "manip2 = " + manip2.getId());
-        Log.d(TAG, "manip3 = " + manip3.getId());
-        Log.d(TAG, "manip4 = " + manip4.getId());
-        Log.d(TAG, "manip5 = " + manip5.getId());
-        Log.d(TAG, "manip6 = " + manip6.getId());
-
-        manip1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {//uprościć do jednej klasy
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                talker.manipsStates[0] = seekBar.getProgress()-100;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                //nic
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                seekBar.setProgress(100);
-            }
-        });
-
-        manip2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                talker.manipsStates[1] = seekBar.getProgress()-100;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                //nic
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                seekBar.setProgress(100);
-            }
-        });
-
-        manip3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                talker.manipsStates[2] = seekBar.getProgress()-100;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                //nic
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                seekBar.setProgress(100);
-            }
-        });
-
-        manip4.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                talker.manipsStates[3] = seekBar.getProgress()-100;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                //nic
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                seekBar.setProgress(100);
-            }
-        });
-
-        manip5.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                talker.manipsStates[4] = seekBar.getProgress()-100;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                //nic
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                seekBar.setProgress(100);
-            }
-        });
-
-        manip6.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                talker.manipsStates[5] = seekBar.getProgress()-100;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                //nic
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                seekBar.setProgress(100);
-            }
-        });
     }
 
     @Override
