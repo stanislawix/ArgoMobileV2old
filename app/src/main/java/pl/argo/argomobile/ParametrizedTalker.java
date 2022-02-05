@@ -82,13 +82,17 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
 
                     twist = twistPublisher.newMessage(); // Init a msg variable that of the publisher type
 
-                    twist.getLinear().setX(linear.getY());//zamiana X i Y (tak mają roboty)
+                    /*
+                     * Aplikacja obsługująca sterowanie joystickiem na komputerze miała wartości od -0.5 do 0.5 dla osi linearX i linearY,
+                     * a od -2.0 do 2.0 dla osi angularZ - stąd takie przeliczniki
+                     */
+                    twist.getLinear().setX(linear.getY());//zamienione osie X i Y (tak mają roboty)
                     twist.getLinear().setY(-linear.getX());
                     twist.getLinear().setZ(linear.getZ());
 
                     twist.getAngular().setX(angular.getX());
                     twist.getAngular().setY(angular.getY());
-                    twist.getAngular().setZ(angular.getZ());
+                    twist.getAngular().setZ(angular.getZ() * 4);
 
                     twistPublisher.publish(twist);
 

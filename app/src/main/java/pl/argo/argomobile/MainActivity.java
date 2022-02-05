@@ -41,7 +41,7 @@ public class MainActivity extends RosActivity {//AppCompatActivity
     private RoverService roverService = RoverService.getInstance();
     private int roverId;
 
-    private double scale = 0.2;
+    private double scale = 0.5;
     private double x, y, z;
 
     public MainActivity() {

@@ -110,7 +110,6 @@
                 android:id="@+id/radio_0_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checked="true"
                 android:onClick="onRadioButtonClicked"
                 android:text="0.2" />
 
@@ -118,6 +117,7 @@
                 android:id="@+id/radio_0_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:onClick="onRadioButtonClicked"
                 android:text="0.5" />
 
