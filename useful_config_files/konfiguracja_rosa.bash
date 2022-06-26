@@ -1,4 +1,4 @@
-#ROBOT MACHINGE CONFIGURATION
+#ROBOT MACHINE CONFIGURATION
 #The localhost IP address = IP address for the Master node
 export ROS_MASTER_URI=http://localhost:11311
 #The IP address for the Master node
@@ -14,7 +14,7 @@ echo "ROS_MASTER_URI: "$ROS_MASTER_URI
 #WORKSTATION CONFIGURATION
 #IP address for the Master node
 export ROS_MASTER_URI=http://192.168.0.152:11311
-#Own IP addressput
+#Own IP address
 export ROS_HOSTNAME=192.168.0.15
 export ROS_IP=192.168.0.15
 
