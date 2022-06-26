@@ -8,10 +8,11 @@
 
     <application
         android:theme="@style/Theme.AppCompat.Light"
-        android:allowBackup="true">
+        android:allowBackup="true"
+        android:usesCleartextTraffic="true">
         <activity android:name=".RoverChooserActivity"/>
         <activity android:name=".MainActivity"
-            android:label="@string/app_name">
+                  android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,12 +22,12 @@
 
         <activity android:name="org.ros.android.MasterChooser"/>
 
-<!--        <service android:name="org.ros.android.NodeRunnerService" />-->
-        <service android:name="org.ros.android.NodeMainExecutorService" />
+<!--        <service android:name="org.ros.android.NodeRunnerService"/>-->
+        <service android:name="org.ros.android.NodeMainExecutorService"/>
 
-<!--        <service android:name="org.ros.android.NodeMainExecutorService" >-->
+<!--        <service android:name="org.ros.android.NodeMainExecutorService">-->
 <!--            <intent-filter>-->
-<!--                <action android:name="org.ros.android.NodeMainExecutorService" />-->
+<!--                <action android:name="org.ros.android.NodeMainExecutorService"/>-->
 <!--            </intent-filter>-->
 <!--        </service>-->
     </application>

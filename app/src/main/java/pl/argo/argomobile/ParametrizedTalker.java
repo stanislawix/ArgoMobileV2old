@@ -10,15 +10,16 @@ import org.ros.node.ConnectedNode;
 import org.ros.node.NodeMain;
 import org.ros.node.topic.Publisher;  // Import the publisher
 
-import java.time.Instant;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.stream.Collectors;
 
 import geometry_msgs.Twist;
 //import sensor_msgs.JointState;
 
 import lombok.Data;
+import pl.argo.argomobile.data.Joint;
+import pl.argo.argomobile.data.Rover;
+import pl.argo.argomobile.data.dto.RoverDto;
 import sensor_msgs.JointState;
 
 
@@ -39,7 +40,7 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
     Vector3Implemenation linear = new Vector3Implemenation();
     Vector3Implemenation angular = new Vector3Implemenation();
 
-    RoverRecord roverRecord;
+    RoverDto rover;
 
     Publisher<geometry_msgs.Twist> twistPublisher;
     Publisher<sensor_msgs.JointState> jointStatePublisher;
@@ -74,9 +75,9 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
 
             @Override
             protected void loop() throws InterruptedException {
-                if(roverRecord != null) {
-                    twistPublisher = connectedNode.newPublisher("/" + roverRecord.getTopicPrefix() + "/cmd_vel", "geometry_msgs/Twist");
-                    jointStatePublisher = connectedNode.newPublisher("/" + roverRecord.getTopicPrefix() + "/joint_states", sensor_msgs.JointState._TYPE);
+                if(rover != null) {
+                    twistPublisher = connectedNode.newPublisher("/" + rover.getTopicPrefix() + "/cmd_vel", "geometry_msgs/Twist");
+                    jointStatePublisher = connectedNode.newPublisher("/" + rover.getTopicPrefix() + "/joint_states", sensor_msgs.JointState._TYPE);
 
                     long startTime = Calendar.getInstance().getTimeInMillis();
 
@@ -96,21 +97,18 @@ public class ParametrizedTalker extends AbstractNodeMain { // Java nodes NEEDS t
 
                     twistPublisher.publish(twist);
 
-                    if(roverRecord.getJointNames() != null) {
+                    if(rover.getJointNames() != null) {
                         manips = jointStatePublisher.newMessage();
 
                         manips.getHeader().setSeq(++seq);
                         manips.getHeader().setStamp(Time.fromMillis(System.currentTimeMillis()));//dodawanie dodatkowo frame_id jest niepotrzebne
 
-                        manips.setName(roverRecord.getJointNames());
+                        manips.setName(rover.getJointNames());
                         //manips.setPosition(manipsStates);
                         //manips.setVelocity(manipsStates);
                         manips.setEffort(manipsStates);
                         jointStatePublisher.publish(manips);
                     }
-
-
-
 
                     long elapsedTime = Calendar.getInstance().getTimeInMillis() - startTime;
 

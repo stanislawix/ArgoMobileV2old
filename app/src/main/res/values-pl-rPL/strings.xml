@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="roverChooserTitle">Wybór łazika</string>
+    <string name="app_name">ArgoMobile</string>
+    <string name="rover_chooser_title">Wybór łazika</string>
     <string name="no_rover_was_chosen">Nie wybrano żadnego łazika!</string>
-    <string name="unable_to_communicate_with_server">Nie można skorzystać z tej funkcjonalności - brak połączenia z serwerem!</string>
+    <string name="unable_to_communicate_with_ros_server">Nie można skorzystać z tej funkcjonalności - brak połączenia z serwerem!</string>
     <string name="current_rover">Obsługiwany łazik:\ </string>
+
+    <string name="update_local_rovers_database">Zaktualizuj bazę łazików\n (wymagane połączenie z internetem)</string>
+    <string name="unable_to_update_rovers_database">Nie udało się zaktualizować listy łazików! Sprawdź połączenie z internetem.</string>
+    <string name="successfully_updated_rovers_database">Aktualizacja listy łazików przebiegła pomyślnie!</string>
 </resources>

@@ -2,7 +2,6 @@ package pl.argo.argomobile;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,6 +28,7 @@ import org.ros.node.NodeMainExecutor;
 import java.lang.reflect.Field;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
+import pl.argo.argomobile.data.dto.RoverDto;
 
 public class MainActivity extends RosActivity {//AppCompatActivity
 
@@ -37,9 +37,8 @@ public class MainActivity extends RosActivity {//AppCompatActivity
     private ParametrizedTalker talker;
     private RosTextView<std_msgs.String> rosTextView;
 
-    private SharedPreferences mPrefs;
-    private RoverService roverService = RoverService.getInstance();
-    private int roverId;
+    private RoverService roverService;
+    private int chosenRoverId;
 
     private double scale = 0.5;
     private double x, y, z;
@@ -60,9 +59,9 @@ public class MainActivity extends RosActivity {//AppCompatActivity
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == 1) {
+                    if (result.getResultCode() == 1) {
                         Intent intent = result.getData();
-                        roverId = intent.getIntExtra("roverId", -1);
+                        chosenRoverId = intent.getIntExtra("roverId", -1);
                         updateActivityContentAndRoverObject();
                     }
                 }
@@ -75,14 +74,10 @@ public class MainActivity extends RosActivity {//AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Odczyt z pamięci trwałej.
-        mPrefs = getSharedPreferences(getLocalClassName(), MODE_PRIVATE);
-        roverId = mPrefs.getInt("roverId", 1);
+        roverService = RoverService.getInstance(getApplicationContext());
 
-        updateActivityContentAndRoverObject();
-
-        rosTextView = findViewById(R.id.rosTextView);//(RosTextView<std_msgs.String>)
-        rosTextView.setTopicName(roverService.getRoverById(roverId).getTopicPrefix());//czy tyle wystarczy??
+        rosTextView = findViewById(R.id.rosTextView);
+        rosTextView.setTopicName(null);
         rosTextView.setMessageType(std_msgs.String._TYPE);
         rosTextView.setMessageToStringCallable(new MessageCallable<String, std_msgs.String>() {
             @Override
@@ -91,12 +86,12 @@ public class MainActivity extends RosActivity {//AppCompatActivity
             }
         });
 
-        JoystickView cmdVelJoystick = (JoystickView) findViewById(R.id.cmd_vel_joystick);
+        JoystickView cmdVelJoystick = findViewById(R.id.cmd_vel_joystick);
 
         cmdVelJoystick.setOnMoveListener((angle, strength) -> {
             ((TextView) findViewById(R.id.cmd_vel_joystick_info)).setText(countJoystickSwingValues(angle, strength));
 
-            if(!((Switch) findViewById(R.id.isAngular)).isChecked()) z = 0;
+            if (!((Switch) findViewById(R.id.isAngular)).isChecked()) z = 0;
             else {
                 z = -x;
                 x = 0;
@@ -106,25 +101,23 @@ public class MainActivity extends RosActivity {//AppCompatActivity
                 talker.getLinear().setX(x);
                 talker.getLinear().setY(y);
                 talker.getAngular().setZ(z);
-            }
-            catch (NullPointerException e) {
-                Toast.makeText(MainActivity.this, R.string.unable_to_communicate_with_server, Toast.LENGTH_SHORT).show();
+            } catch (NullPointerException e) {
+                Toast.makeText(MainActivity.this, R.string.unable_to_communicate_with_ros_server, Toast.LENGTH_SHORT).show();
             }
         });
 
         SeekBar[] manips = new SeekBar[6];
-        for(int i=0; i<6; ++i) {
-            manips[i] = (SeekBar) findViewById(getResId(String.format("manip_%d_seekbar", (i+1)), R.id.class));
+        for (int i = 0; i < 6; ++i) {
+            manips[i] = findViewById(getResId(String.format("manip_%d_seekbar", (i + 1)), R.id.class));
 
             int iCopy = i;
             manips[i].setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     try {
-                        talker.manipsStates[iCopy] = seekBar.getProgress()-100;
-                    }
-                    catch (NullPointerException e) {
-                        Toast.makeText(MainActivity.this, R.string.unable_to_communicate_with_server, Toast.LENGTH_SHORT).show();
+                        talker.manipsStates[iCopy] = seekBar.getProgress() - 100;
+                    } catch (NullPointerException e) {
+                        Toast.makeText(MainActivity.this, R.string.unable_to_communicate_with_ros_server, Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -138,17 +131,13 @@ public class MainActivity extends RosActivity {//AppCompatActivity
                     seekBar.setProgress(100);
                 }
             });
+
+            SeekBar seekBar = findViewById(getResId(String.format("manip_%d_seekbar", (i + 1)), R.id.class));
+            TextView textView = findViewById(getResId(String.format("manip_%d_info", (i + 1)), R.id.class));
+
+            seekBar.setVisibility(View.INVISIBLE);
+            textView.setVisibility(View.INVISIBLE);
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        // Zapis do pamięci trwałej.
-        SharedPreferences.Editor editor = mPrefs.edit();
-        editor.putInt("roverId", roverId);
-        editor.commit();
     }
 
     @Override
@@ -173,31 +162,30 @@ public class MainActivity extends RosActivity {//AppCompatActivity
     }
 
     /**
-     * Metoda aktualizująca aktualne activity oraz obiekt samego łazika - w zależności od wybranego łazika (różne joysticki dla różnych łazików)
+     * Metoda aktualizująca aktualne activity oraz obiekt samego łazika — w zależności od wybranego łazika (różne joysticki dla różnych łazików)
      */
     @SuppressLint("SetTextI18n")
     private void updateActivityContentAndRoverObject() {
-        RoverRecord roverRecord = roverService.getRoverById(roverId);
+        RoverDto rover = roverService.getRoverById(chosenRoverId);
         TextView roverName = findViewById(R.id.roverName);
 
-        roverName.setText(getString(R.string.current_rover) + roverRecord.getName());
+        roverName.setText(getString(R.string.current_rover) + rover.getName());
 
-        if(talker != null) {
-            if(roverRecord.getJointNames() != null) talker.initializeManipsStates(roverRecord.getJointNames().size());
+        if (talker != null) {
+            if (rover.getJointNames() != null) talker.initializeManipsStates(rover.getJointNames().size());
             else talker.initializeManipsStates(0);
-            talker.setRoverRecord(roverRecord);
+            talker.setRover(rover);
         }
 
-        for(int i=0; i<6; ++i) {
+        for (int i = 0; i < 6; ++i) {
             SeekBar seekBar = findViewById(getResId(String.format("manip_%d_seekbar", (i + 1)), R.id.class));
             TextView textView = findViewById(getResId(String.format("manip_%d_info", (i + 1)), R.id.class));
 
-            if(roverRecord.getJointNames() != null && i < roverRecord.getJointNames().size()) {
+            if (rover.getJointNames() != null && i < rover.getJointNames().size()) {
                 seekBar.setVisibility(View.VISIBLE);
                 textView.setVisibility(View.VISIBLE);
-                textView.setText(roverRecord.getJointNames().get(i));
-            }
-            else {
+                textView.setText(rover.getJointNames().get(i));
+            } else {
                 seekBar.setVisibility(View.INVISIBLE);
                 textView.setVisibility(View.INVISIBLE);
             }
@@ -229,7 +217,7 @@ public class MainActivity extends RosActivity {//AppCompatActivity
         boolean checked = ((RadioButton) view).isChecked();
 
         // Check which radio button was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.radio_0_2:
                 if (checked)
                     scale = 0.2;
@@ -255,7 +243,7 @@ public class MainActivity extends RosActivity {//AppCompatActivity
     }
 
     private String countJoystickSwingValues(int angle, int strength) {
-        x = Math.round(strength * Math.cos(angle * Math.PI / 180) * 100 * scale / 100.00 ) / 100.00;
+        x = Math.round(strength * Math.cos(angle * Math.PI / 180) * 100 * scale / 100.00) / 100.00;
         y = Math.round(strength * Math.sin(angle * Math.PI / 180) * 100 * scale / 100.00) / 100.00;
 
         String out = "";

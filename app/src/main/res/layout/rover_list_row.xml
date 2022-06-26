@@ -22,11 +22,12 @@
         android:text="Topic prefix"/>
 
     <ImageView
-        android:id="@+id/roverImage"
-        android:src="@color/cardview_dark_background"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:contentDescription="Rover image"/>
+            android:id="@+id/roverImage"
+            android:src="@color/cardview_dark_background"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:contentDescription="Rover image"
+            android:visibility="invisible"/><!--TODO in the future: change to visible (after getting images from API)-->
 
 </LinearLayout>

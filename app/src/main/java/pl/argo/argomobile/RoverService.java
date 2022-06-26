@@ -1,42 +1,115 @@
 package pl.argo.argomobile;
 
-import android.widget.ArrayAdapter;
+import android.content.Context;
+import android.os.StrictMode;
+import androidx.room.Room;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import lombok.SneakyThrows;
+import pl.argo.argomobile.data.*;
+import pl.argo.argomobile.data.dto.RoverDto;
+import pl.argo.argomobile.data.dto.RoverMapper;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RoverService {
 
     private static RoverService instance;
 
-    private List<RoverRecord> roverRecordsList;
+    RoverDao roverDao;
+    JointDao jointDao;
 
-    private RoverService() {
-        roverRecordsList = new ArrayList<>();
+    private final RoverMapper roverMapper = new RoverMapper();
 
-        roverRecordsList.add(new RoverRecord(1, R.drawable.argo_v3, "Argo V3", "argo", Arrays.asList("manip_1", "manip_2", "manip_3", "manip_4", "manip_5", "manip_6")));//ta wersja jest chyba najlepsza
-        roverRecordsList.add(new RoverRecord(2, R.drawable.dzik, "Dzik", "argo_mini", null));
-        roverRecordsList.add(new RoverRecord(3, R.drawable.hyperion, "Hyperion", "hyperion", Arrays.asList("manip_1", "manip_2", "manip_3", "manip_4")));
-        roverRecordsList.add(new RoverRecord(4, R.drawable.next, "Next", "next", Arrays.asList("joint1", "joint2", "joint3", "joint4")));
-        roverRecordsList.add(new RoverRecord(5, R.drawable.red, "Red", "red", Arrays.asList("manip1", "manip2", "manip3", "manip4")));
-        roverRecordsList.add(new RoverRecord(6, R.drawable.turtle, "Turtle", "turtle1", null));
+    private RoverService(Context applicationContext) {
+        AppDatabase database = Room.databaseBuilder(applicationContext, AppDatabase.class, "database-name").allowMainThreadQueries().build();
+        roverDao = database.roverDao();
+        jointDao = database.jointDao();
     }
 
-    public static RoverService getInstance() {
-        if (instance == null) instance = new RoverService();
+    public static RoverService getInstance(Context applicationContext) {
+        if (instance == null) instance = new RoverService(applicationContext);
         return instance;
     }
 
-    public RoverRecord getRoverById(int id) {
-        return roverRecordsList
-                .stream()
-                .filter(x -> x.getId() == id)
-                .findFirst()
-                .orElse(null);
+    public RoverDto getRoverById(int id) {
+        return roverMapper.toDto(roverDao.getById(id), jointDao.getAllByRoverId(id));
     }
 
-    public List<RoverRecord> getAllRovers() {
-        return roverRecordsList;
+    public List<RoverDto> getAllRovers() {
+        List<Rover> rovers = roverDao.getAll();
+        List<RoverDto> roverDtos = new ArrayList<>();
+
+        for (Rover rover : rovers) {
+            List<Joint> roverJoints = jointDao.getAllByRoverId(rover.getId());
+
+            roverDtos.add(roverMapper.toDto(rover, roverJoints));
+        }
+
+        return roverDtos;
+    }
+
+    /**
+     * Method updating rovers list from "WebRoverConfigurator" application API.
+     */
+    //@SneakyThrows
+    public boolean updateRoversFromApi() {
+
+        //Allow internet connection on main thread not recommended, but easier and faster to implement
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        String sURL = "http://ec2-18-198-201-108.eu-central-1.compute.amazonaws.com:8080/api/rovers";//TODO: change when app maintainer will change
+
+
+        JsonElement root;
+        try {
+            URL url = new URL(sURL);
+            URLConnection request = url.openConnection();
+            request.connect();
+
+            root = JsonParser.parseReader(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
+        } catch (IOException e) {
+            return false;
+        }
+
+        // Convert to a JSON object to print data
+
+        JsonArray allJsonRovers = root.getAsJsonArray();
+
+        jointDao.deleteAll();
+        roverDao.deleteAll();
+
+        allJsonRovers.forEach(jsonRover -> {
+            JsonObject jsonRoverObject = jsonRover.getAsJsonObject();
+            Rover rover = Rover.builder()
+                    .id(jsonRoverObject.get("id").getAsInt())
+                    .name(jsonRoverObject.get("name").getAsString())
+                    .topicPrefix(jsonRoverObject.get("topicPrefix").getAsString())
+                    .build();
+
+            JsonArray jsonJoints = jsonRoverObject.getAsJsonArray("joints");
+            jsonJoints.forEach(jsonJoint -> {
+                JsonObject jsonJointObject = jsonJoint.getAsJsonObject();
+                Joint joint = Joint.builder()
+                        .id(jsonJointObject.get("id").getAsInt())
+                        .jointName(jsonJointObject.get("jointName").getAsString())
+                        .roverId(rover.getId())
+                        .build();
+
+                jointDao.insert(joint);
+            });
+            roverDao.insert(rover);
+        });
+
+        return true;
     }
 }

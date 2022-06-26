@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">ArgoMobile</string>
-    <string name="save">Save</string>
-    <string name="my_string">horse</string>
-    <string name="connectionTestButton">Let\'s send a message</string>
-    <string name="roverChooserTitle">Choose a rover</string>
+    <string name="rover_chooser_title">Choose a rover</string>
     <string name="no_rover_was_chosen">No rover was chosen!</string>
-    <string name="unable_to_communicate_with_server">You can\'t use this functionality right now - unable to communicate with the master server!</string>
+    <string name="unable_to_communicate_with_ros_server">You can\'t use this functionality right now - unable to communicate with the master server!</string>
     <string name="current_rover">Current rover:\ </string>
+
+    <string name="update_local_rovers_database">Update local rovers database\n (internet connection required)</string>
+    <string name="unable_to_update_rovers_database">Update failed! Check your internet connection.</string>
+    <string name="successfully_updated_rovers_database">Update ended successfully!</string>
 </resources>
