@@ -77,7 +77,7 @@ public class MainActivity extends RosActivity {//AppCompatActivity
         roverService = RoverService.getInstance(getApplicationContext());
 
         rosTextView = findViewById(R.id.rosTextView);
-        rosTextView.setTopicName(null);
+        rosTextView.setTopicName("");
         rosTextView.setMessageType(std_msgs.String._TYPE);
         rosTextView.setMessageToStringCallable(new MessageCallable<String, std_msgs.String>() {
             @Override
